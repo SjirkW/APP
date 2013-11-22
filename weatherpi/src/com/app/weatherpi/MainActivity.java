@@ -3,12 +3,14 @@ package com.app.weatherpi;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.app.weatherpi.JsonReadTask;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,12 +27,12 @@ public class MainActivity extends Activity {
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
 	private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	private String url = "http://standpi.com/android/getWeatherInfo.php";
 	
     String SENDER_ID = "12989714526";
 
 	private static final String TAG = "Weather Pi";
 	
-	TextView mDisplay;
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     SharedPreferences prefs;
@@ -42,23 +44,21 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-	    mDisplay = (TextView) findViewById(R.id.display);
-
+	
 	    context = getApplicationContext();
 
 	    // Check device for Play Services APK.
 	    if (checkPlayServices()) {
 	         gcm = GoogleCloudMessaging.getInstance(this);
 	            regid = getRegistrationId(context);
-	            mDisplay.setText("");
-                mDisplay.append(regid + "\n");
 	            if (regid.isEmpty()) {
 	                registerInBackground();
 	            }
 	        } else {
 	            Log.i(TAG, "No valid Google Play Services APK found.");
 	        }
+	    
+	    accessWebService();
 	}
 	
 	// You need to do the Play Services APK check here too.
@@ -66,6 +66,7 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 	    super.onResume();
 	    checkPlayServices();
+	    accessWebService();
 	}
 
 	@Override
@@ -185,7 +186,7 @@ public class MainActivity extends Activity {
 
             @Override
             protected void onPostExecute(String msg) {
-                mDisplay.append(msg + "\n");
+
             }
         }.execute(null, null, null);
     }
@@ -217,35 +218,12 @@ public class MainActivity extends Activity {
 	        editor.commit();
 	    }
 	    
-	 // Send an upstream message.
-	    public void onClick(final View view) {
-
-	        if (view == findViewById(R.id.send)) {
-	            new AsyncTask<Void, Void, String>() {
-	                @Override
-	                protected String doInBackground(Void... params) {
-	                    String msg = "";
-	                    try {
-	                        Bundle data = new Bundle();
-	                        data.putString("my_message", "Hello World");
-	                        data.putString("my_action", "com.google.android.gcm.demo.app.ECHO_NOW");
-	                        String id = Integer.toString(msgId.incrementAndGet());
-	                        gcm.send(SENDER_ID + "@gcm.googleapis.com", id, data);
-	                        msg = "Sent message";
-	                    } catch (IOException ex) {
-	                        msg = "Error :" + ex.getMessage();
-	                    }
-	                    return msg;
-	                }
-
-	                @Override
-	                protected void onPostExecute(String msg) {
-	                    mDisplay.append(msg + "\n");
-	                }
-	            }.execute(null, null, null);
-	        } else if (view == findViewById(R.id.clear)) {
-	            mDisplay.setText("");
-	        }
-	    }
+	 
+		  public void accessWebService() {
+			  JsonReadTask task = new JsonReadTask(this);
+			  // passes values for the urls string array
+			  task.execute(new String[] { url });
+			 }
+		
 
 }

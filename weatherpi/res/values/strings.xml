@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">weatherpi</string>
+    <string name="app_name">Weatherpi</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
+    <color name="red">#61C56E</color>
+    <color name="blue">#DD7775</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>

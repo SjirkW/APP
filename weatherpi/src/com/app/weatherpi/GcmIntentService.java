@@ -3,6 +3,7 @@ package com.app.weatherpi;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -47,23 +48,17 @@ public class GcmIntentService extends IntentService {
             // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.
                     MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                // This loop represents the service doing some work.
-                for (int i=0; i<5; i++) {
-                    Log.i(TAG, "Working... " + (i+1)
-                            + "/5 @ " + SystemClock.elapsedRealtime());
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                    }
-                }
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
+               
                 // Post notification of received message.
-                sendNotification("Received: " + extras.toString());
+                //get the first parameter 
+                String msg = extras.getString("param1");
+                sendNotification(msg);
                 Log.i(TAG, "Received: " + extras.toString());
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+        
     }
 
     // Put the message into a notification and post it.
@@ -72,6 +67,8 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
+        
+        long[] vibPatern = {10,10,10,10,10};
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), 0);
@@ -79,12 +76,15 @@ public class GcmIntentService extends IntentService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
         .setSmallIcon(R.drawable.ic_launcher)
-        .setContentTitle("GCM Notification")
+        .setContentTitle("Weather Pi")
         .setStyle(new NotificationCompat.BigTextStyle()
         .bigText(msg))
+        .setVibrate(vibPatern)
+        .setDefaults(Notification.DEFAULT_VIBRATE)
         .setContentText(msg);
-
+        
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        
     }
 }

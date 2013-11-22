@@ -1,37 +1,48 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+      android:orientation="vertical" 
+      android:background="@drawable/bg">
+      
+      <Button
+            android:id="@+id/topOffset"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="0dp"
+            android:layout_weight="3" 
+            android:gravity="center_horizontal" 
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textSize="30dp"/>
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:orientation="vertical">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+        <Button
+            android:id="@+id/displayTemp"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" 
+            android:gravity="center"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textSize="75dp"/>
 
-            <Button
-                android:id="@+id/send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Send" />
+        <Button
+            android:id="@+id/displayHumidity"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" 
+            android:gravity="center" 
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textSize="30dp"/>
+        
+         <Button
+            android:id="@+id/bottomOffset"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4" 
+            android:gravity="center_horizontal" 
+            android:background="@null"
+            android:textColor="@color/white"
+            android:textSize="30dp"/>
 
-            <Button
-                android:id="@+id/clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="Clear" />
 
-        </LinearLayout>
-
-        <EditText
-                android:id="@+id/display"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

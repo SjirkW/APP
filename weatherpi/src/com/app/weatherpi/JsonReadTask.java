@@ -78,7 +78,6 @@ public class JsonReadTask extends AsyncTask<String, Void, String> {
 	protected void onPostExecute(String result) {
 		// show the text
 		drawConditions(jsonResult);
-		Log.i(TAG, jsonResult);
 	}
 
 	private void drawConditions(String conditions) {

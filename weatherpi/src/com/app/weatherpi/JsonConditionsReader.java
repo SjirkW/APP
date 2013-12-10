@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
@@ -27,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 // Async Task to access the web
-public class JsonReadTask extends AsyncTask<String, Void, String> {
+public class JsonConditionsReader extends AsyncTask<String, Void, String> {
 	public Activity activity;
 
 	private String jsonResult;
@@ -35,7 +36,7 @@ public class JsonReadTask extends AsyncTask<String, Void, String> {
 
 	TextView mDisplay;
 
-	public JsonReadTask(Activity _activity) {
+	public JsonConditionsReader(Activity _activity) {
 		this.activity = _activity;
 	}
 
@@ -88,7 +89,7 @@ public class JsonReadTask extends AsyncTask<String, Void, String> {
 			
 			String temp = jsonResponse.optString("temp");
 			Button txtTemp = (Button) this.activity.findViewById(R.id.displayTemp);
-			txtTemp.setText(temp + "°");
+			txtTemp.setText(Html.fromHtml(temp + "°" ));
 			
 			String humidity = jsonResponse.optString("humidity");
 			Button txtHumidity = (Button) this.activity.findViewById(R.id.displayHumidity);

@@ -8,5 +8,5 @@
     <color name="red">#61C56E</color>
     <color name="blue">#DD7775</color>
     <color name="white">#FFFFFF</color>
-
+     <color name="shadowColor">#555555</color>
 </resources>

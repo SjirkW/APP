@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="#000000" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp" >
+
+        <TextView
+            android:id="@+id/minValueTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:text="15" 
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Temperatuur"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/maxValueTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="23" 
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="40dp" >
+
+        <TextView
+            android:id="@+id/minValueHum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:text="40"
+            android:textColor="#ffffff" />
+
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Luchtvochtigheid" 
+            android:textColor="#ffffff"/>
+
+        <TextView
+            android:id="@+id/maxValueHum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:text="70" 
+             android:gravity="right"
+             android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutHum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp" />
+
+    <Button
+        android:id="@+id/buttonPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pas aan"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:onClick="submitToDB" 
+        android:background="@null"
+        android:textColor="#ffffff"/>
+
+</LinearLayout>

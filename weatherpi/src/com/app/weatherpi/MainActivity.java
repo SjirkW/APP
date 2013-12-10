@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.app.weatherpi.JsonReadTask;
+import com.app.weatherpi.JsonConditionsReader;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -16,11 +16,13 @@ import android.os.Handler;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -62,31 +64,16 @@ public class MainActivity extends Activity {
 		} else {
 			Log.i(TAG, "No valid Google Play Services APK found.");
 		}
-
-		accessWebService();
-
-		// auto refresh
-		int delay = 60 * 1000;// milli seconds
-
-		mTimer = new Timer();
-		mTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				// What you want to do goes here
-				accessWebService();
-			}
-		}, 0, delay);
 	}
 
-	// You need to do the Play Services APK check here too.
+	// The method that gets the display text from the database is called here
 	@Override
 	protected void onResume() {
 		super.onResume();
 		checkPlayServices();
-		accessWebService();
 
 		// auto refresh
-		int delay = 60 * 1000;// milli seconds
+		int delay = 60 * 1000;// 1 minute
 
 		mTimer = new Timer();
 		mTimer.scheduleAtFixedRate(new TimerTask() {
@@ -262,9 +249,25 @@ public class MainActivity extends Activity {
 	}
 
 	public void accessWebService() {
-		JsonReadTask task = new JsonReadTask(this);
+		JsonConditionsReader task = new JsonConditionsReader(this);
 		// passes values for the urls string array
 		task.execute(new String[] { url });
 	}
+
+	public void changeSettings(MenuItem item) {
+		String message = getRegistrationId(context);
+		
+		if (message.length() > 1)
+		{
+			Intent intent = new Intent(this, SettingsActivity.class);
+			intent.putExtra(EXTRA_MESSAGE, message);
+			startActivity(intent);
+		}
+		else
+		{
+			Log.i(TAG, "No reg id found");
+		}
+	}
+	
 
 }
